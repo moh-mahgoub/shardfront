@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Shardfront</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Shardfront">
+<meta name="theme-color" content="#05070a">
+<meta name="format-detection" content="telephone=no">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/icon-180.png">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<canvas id="game"></canvas>
+
+<div id="hud" class="hidden">
+  <div id="topbar">
+    <div class="res" title="Shards"><canvas class="ico" id="ico-ore"></canvas><span id="ore">0</span></div>
+    <div class="res" title="Supply"><span class="suplabel">SUPPLY</span><span id="supply">0/0</span></div>
+    <div class="res dim" id="clock">0:00</div>
+    <button class="tb" id="btn-idle" aria-label="Select idle worker">Idle <b id="idle-n">0</b></button>
+    <button class="tb" id="btn-army" aria-label="Select all army">Army <b id="army-n">0</b></button>
+    <button class="tb" id="btn-menu" aria-label="Pause menu">&#9776;</button>
+  </div>
+  <div id="banner" class="hidden"></div>
+  <div id="toast" class="hidden"></div>
+
+  <div id="leftcol">
+    <button id="btn-mode" aria-label="Toggle one-finger drag mode"><span id="mode-ico"></span><span id="mode-label">Select</span></button>
+    <div id="groups"></div>
+  </div>
+
+  <div id="bottomleft">
+    <canvas id="minimap"></canvas>
+    <div id="selpanel"></div>
+  </div>
+  <div id="cmdcard"></div>
+  <pre id="debug" class="hidden"></pre>
+</div>
+
+<div id="menu-main" class="screen">
+  <div class="panel scroll">
+    <h1>SHARDFRONT</h1>
+    <p class="tag">Gather. Build. Break their line.</p>
+    <h3>Your faction</h3>
+    <div class="row" id="pick-faction"></div>
+    <h3>Opponent</h3>
+    <div class="row" id="pick-diff"></div>
+    <button class="big" id="btn-play">Play</button>
+    <div class="row">
+      <button class="mid" id="btn-howto">How to play</button>
+      <button class="mid" id="btn-settings">Settings</button>
+    </div>
+  </div>
+</div>
+
+<div id="menu-pause" class="screen hidden">
+  <div class="panel">
+    <h2>Paused</h2>
+    <button class="big" id="btn-resume">Resume</button>
+    <button class="mid" id="btn-restart">Restart match</button>
+    <button class="mid" id="btn-settings2">Settings</button>
+    <button class="mid" id="btn-howto2">How to play</button>
+    <button class="mid" id="btn-quit">Quit to menu</button>
+  </div>
+</div>
+
+<div id="menu-settings" class="screen hidden">
+  <div class="panel">
+    <h2>Settings</h2>
+    <label>Volume <input type="range" id="set-volume" min="0" max="1" step="0.05"></label>
+    <label>UI scale <input type="range" id="set-scale" min="0.8" max="1.4" step="0.05"></label>
+    <label class="check"><input type="checkbox" id="set-debug"> Debug overlay (FPS, tick time, units, paths)</label>
+    <button class="big" id="btn-settings-done">Done</button>
+  </div>
+</div>
+
+<div id="menu-howto" class="screen hidden">
+  <div class="panel wide scroll">
+    <h2>How to play</h2>
+    <div class="cols">
+      <div>
+        <h3>Touch</h3>
+        <ul>
+          <li><b>Tap</b> a unit or building to select it.</li>
+          <li>With units selected, <b>tap ground</b> to move, <b>tap an enemy</b> to attack, <b>tap shards</b> to gather.</li>
+          <li><b>Double-tap</b> a unit to select all of that type on screen.</li>
+          <li><b>Drag</b> one finger: box-select in <b>Select</b> mode, pan in <b>Camera</b> mode (toggle at the left edge).</li>
+          <li><b>Two fingers</b> always pan and pinch-zoom.</li>
+          <li>Group buttons <b>1-5</b>: tap to select, tap again to jump there, <b>long-press</b> to assign.</li>
+          <li><b>Build</b>: pick a structure, drag the ghost, then tap the ghost or the green tick.</li>
+          <li><b>Minimap</b>: tap to jump, drag to pan.</li>
+        </ul>
+      </div>
+      <div>
+        <h3>Mouse &amp; keyboard</h3>
+        <ul>
+          <li>Left-click / drag to select, right-click to move, attack, gather or set a rally point.</li>
+          <li>Wheel zooms, arrow keys or middle-drag pan.</li>
+          <li><b>A</b> attack-move, <b>M</b> move, <b>P</b> patrol, <b>S</b> stop, <b>H</b> hold, <b>B</b> build, <b>Esc</b> cancel / pause.</li>
+          <li><b>1-5</b> select group, <b>Ctrl/Alt+1-5</b> assign. <b>F3</b> debug overlay.</li>
+        </ul>
+        <h3>Goal</h3>
+        <ul>
+          <li>Workers mine <b>shards</b>. Supply buildings raise your unit cap.</li>
+          <li>Melee beats anti-armor, anti-armor beats armored, armored beats light units, ranged beats melee.</li>
+          <li>Destroy every enemy structure to win.</li>
+        </ul>
+      </div>
+    </div>
+    <button class="big" id="btn-howto-done">Got it</button>
+  </div>
+</div>
+
+<div id="menu-result" class="screen hidden">
+  <div class="panel">
+    <h1 id="result-title">Victory</h1>
+    <p class="tag" id="result-sub"></p>
+    <table id="result-stats"></table>
+    <button class="big" id="btn-again">Play again</button>
+    <button class="mid" id="btn-result-menu">Main menu</button>
+  </div>
+</div>
+
+<div id="rotate" class="screen"><div class="panel"><h2>Rotate your device</h2><p class="tag">Shardfront plays in landscape.</p></div></div>
+
+<script type="module" src="src/client/main.js"></script>
+</body>
+</html>

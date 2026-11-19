@@ -1,0 +1,14 @@
+{
+  "name": "shardfront",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Shardfront - an original browser RTS playable on iPad",
+  "scripts": {
+    "start": "node tools/serve.mjs",
+    "bundle": "node tools/bundle.mjs",
+    "test:sim": "node tests/ai-vs-ai.mjs",
+    "test:smoke": "node tests/smoke.mjs",
+    "test": "node tests/ai-vs-ai.mjs && node tests/smoke.mjs"
+  }
+}
