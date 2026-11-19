@@ -8,7 +8,7 @@ The README is the player/maintainer guide; this file is how to work on the code.
 ## Hard rules
 
 - **Original IP only.** No names, units, factions, art, sounds or UI from StarCraft/Blizzard or any other
-  game. The local folder happens to be called "StarCraft Alike"; the game must not be.
+  game, however the original brief was phrased.
 - **No dependencies, no build step, no runtime network calls.** Plain HTML + ES modules + Canvas 2D.
   All art is drawn in code (`src/client/sprites.js`); all audio is synthesised (`src/client/audio.js`).
 - **The simulation is deterministic.** Nothing under `src/sim/` may use `Math.random`, `Date`,
@@ -72,7 +72,7 @@ Useful URL params: `?seed=7`, `?debug=1` (FPS/tick/path overlay; also F3), `?aut
 
 ## One-time setup on Mohamed's Mac (do this if `git status` fails)
 
-The local folder (`~/_My-AI-Apps/StarCraft Alike`) was created before the GitHub repo existed and may
+The local folder (`~/_My-AI-Apps/Shardfront`) was created before the GitHub repo existed and may
 not be a git checkout yet. Link it without losing local files:
 
 ```
