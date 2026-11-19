@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "permissions": {
+    "allow": [
+      "Bash(node tests/ai-vs-ai.mjs *)",
+      "Bash(node tests/ai-vs-ai.mjs)",
+      "Bash(node tests/smoke.mjs *)",
+      "Bash(node tests/smoke.mjs)",
+      "Bash(node tools/bundle.mjs)",
+      "Bash(node tools/balance.mjs *)",
+      "Bash(node tools/balance.mjs)",
+      "Bash(git status *)",
+      "Bash(git status)",
+      "Bash(git diff *)",
+      "Bash(git diff)",
+      "Bash(git log *)",
+      "Bash(git add *)"
+    ]
+  }
+}

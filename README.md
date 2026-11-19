@@ -120,6 +120,14 @@ match to the result screen, restart, and `standalone.html` from `file://`. It fa
 Useful URL parameters: `?seed=7` fixed map seed · `?debug=1` debug overlay · `?autostart=hard` skip the menu ·
 `?autostart=hard&demo=hard` watch AI vs AI.
 
+## Working on it with Claude Code
+
+`CLAUDE.md` briefs Claude Code on the project (rules, layout, commands, checklist), and
+`.claude/` holds project permissions and a `/deploy` command that tests, rebuilds, pushes and
+checks the live site. Open the folder in Claude Code (Terminal: `cd` into it and run `claude`,
+or the Claude desktop app's **Code** tab) and describe the change you want.
+`node tools/balance.mjs` runs a win-rate sweep after balance edits.
+
 ## Architecture
 
 ```
