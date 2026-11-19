@@ -1,7 +1,7 @@
 // Offline support for the installed (Home Screen) app. Network-first so a fresh
 // deploy is picked up immediately; falls back to the cache when offline.
 // Only same-origin GETs for the game's own files are ever touched.
-const CACHE = 'shardfront-v1';
+const CACHE = 'shardfront-v2';
 const FILES = ['./', 'index.html', 'style.css', 'manifest.webmanifest', 'icons/icon-180.png', 'icons/icon-192.png', 'icons/icon-512.png',
   'src/data.js', 'src/sim/rng.js', 'src/sim/map.js', 'src/sim/pathfinding.js', 'src/sim/spatial.js', 'src/sim/game.js', 'src/sim/commands.js',
   'src/sim/units.js', 'src/sim/buildings.js', 'src/sim/movement.js', 'src/sim/combat.js', 'src/sim/fog.js', 'src/sim/ai.js',
