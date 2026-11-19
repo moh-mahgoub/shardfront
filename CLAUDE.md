@@ -80,6 +80,7 @@ git init -b main
 git remote add origin https://github.com/moh-mahgoub/shardfront.git
 git fetch origin
 git reset origin/main          # mixed reset: adopts history, keeps the working files as they are
+git restore .claude            # .claude/ (settings + /deploy) exists only on GitHub at first
 git status                     # should be clean or show only real local edits
 ```
 
